@@ -1,0 +1,9 @@
+# Restricted Taiwan data (data-use agreement)
+data/TBDCdata_YLL/
+data/restricted/
+
+# R / OS
+.RData
+.Rhistory
+.Rproj.user/
+.DS_Store

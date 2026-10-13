@@ -1,0 +1,135 @@
+ghecause_lv3,ghecause_lv2,causename_lv3,causename_lv2
+30,20,Tuberculosis,Infectious and parasitic diseases
+40,20,STDs excluding HIV,Infectious and parasitic diseases
+100,20,HIV/AIDS,Infectious and parasitic diseases
+110,20,Diarrhoeal diseases,Infectious and parasitic diseases
+120,20,Childhood-cluster diseases,Infectious and parasitic diseases
+170,20,Meningitis,Infectious and parasitic diseases
+180,20,Encephalitis,Infectious and parasitic diseases
+185,20,Hepatitis,Infectious and parasitic diseases
+210,20,Parasitic and vector diseases,Infectious and parasitic diseases
+330,20,Intestinal nematode infections,Infectious and parasitic diseases
+365,20,Leprosy,Infectious and parasitic diseases
+370,20,Other infectious diseases,Infectious and parasitic diseases
+390,380,Lower respiratory infections,Respiratory infections 
+395,380,COVID-19,Respiratory infections 
+400,380,Upper respiratory infections,Respiratory infections 
+410,380,Otitis media,Respiratory infections 
+420,420,Maternal conditions,Maternal conditions
+500,490,Preterm birth complications,Neonatal conditions
+510,490,Birth asphyxia and birth trauma,Neonatal conditions
+520,490,Neonatal sepsis and infections,Neonatal conditions
+530,490,Other neonatal conditions,Neonatal conditions
+550,540,Protein-energy malnutrition,Nutritional deficiencies
+560,540,Iodine deficiency,Nutritional deficiencies
+570,540,Vitamin A deficiency,Nutritional deficiencies
+580,540,Iron-deficiency anaemia,Nutritional deficiencies
+590,540,Other nutritional deficiencies,Nutritional deficiencies
+620,610,Mouth and oropharynx cancers,Malignant neoplasms
+630,610,Oesophagus cancer,Malignant neoplasms
+640,610,Stomach cancer,Malignant neoplasms
+650,610,Colon and rectum cancers,Malignant neoplasms
+660,610,Liver cancer,Malignant neoplasms
+670,610,Pancreas cancer,Malignant neoplasms
+680,610,"Trachea, bronchus, lung cancers",Malignant neoplasms
+690,610,Melanoma and other skin cancers,Malignant neoplasms
+700,610,Breast cancer,Malignant neoplasms
+710,610,Cervix uteri cancer,Malignant neoplasms
+720,610,Corpus uteri cancer,Malignant neoplasms
+730,610,Ovary cancer,Malignant neoplasms
+740,610,Prostate cancer,Malignant neoplasms
+742,610,Testicular cancer,Malignant neoplasms
+745,610,Kidney cancer,Malignant neoplasms
+750,610,Bladder cancer,Malignant neoplasms
+751,610,Brain and nervous system cancers,Malignant neoplasms
+752,610,Gallbladder and biliary tract cancer,Malignant neoplasms
+753,610,Larynx cancer,Malignant neoplasms
+754,610,Thyroid cancer,Malignant neoplasms
+755,610,Mesothelioma,Malignant neoplasms
+760,610,"Lymphomas, multiple myeloma",Malignant neoplasms
+770,610,Leukaemia,Malignant neoplasms
+780,610,Other malignant neoplasms,Malignant neoplasms
+790,790,Other neoplasms,Other neoplasms
+800,800,Diabetes mellitus,Diabetes mellitus
+811,810,Thalassaemias,"Endocrine, blood, immune disorders"
+812,810,Sickle cell disorders and trait,"Endocrine, blood, immune disorders"
+813,810,Other haemoglobinopathies and haemolytic anaemias,"Endocrine, blood, immune disorders"
+814,810,"Other endocrine, blood and immune disorders","Endocrine, blood, immune disorders"
+830,820,Depressive disorders,Mental and substance use disorders
+840,820,Bipolar disorder,Mental and substance use disorders
+850,820,Schizophrenia,Mental and substance use disorders
+860,820,Alcohol use disorders,Mental and substance use disorders
+870,820,Drug use disorders,Mental and substance use disorders
+880,820,Anxiety disorders,Mental and substance use disorders
+890,820,Eating disorders,Mental and substance use disorders
+900,820,Autism and Asperger syndrome,Mental and substance use disorders
+910,820,Childhood behavioural disorders,Mental and substance use disorders
+920,820,Idiopathic intellectual disability,Mental and substance use disorders
+930,820,Other mental and behavioural disorders,Mental and substance use disorders
+950,940,Alzheimer disease and other dementias,Neurological conditions
+960,940,Parkinson disease,Neurological conditions
+970,940,Epilepsy,Neurological conditions
+980,940,Multiple sclerosis,Neurological conditions
+990,940,Migraine,Neurological conditions
+1000,940,Non-migraine headache,Neurological conditions
+1010,940,Other neurological conditions,Neurological conditions
+1030,1020,Glaucoma,Sense organ diseases
+1040,1020,Cataracts,Sense organ diseases
+1050,1020,Uncorrected refractive errors,Sense organ diseases
+1060,1020,Macular degeneration,Sense organ diseases
+1070,1020,Other vision loss,Sense organ diseases
+1080,1020,Other hearing loss,Sense organ diseases
+1090,1020,Other sense organ disorders,Sense organ diseases
+1110,1100,Rheumatic heart disease,Cardiovascular diseases
+1120,1100,Hypertensive heart disease,Cardiovascular diseases
+1130,1100,Ischaemic heart disease,Cardiovascular diseases
+1140,1100,Stroke,Cardiovascular diseases
+1150,1100,"Cardiomyopathy, myocarditis, endocarditis",Cardiovascular diseases
+1160,1100,Other circulatory diseases,Cardiovascular diseases
+1180,1170,Chronic obstructive pulmonary disease,Respiratory diseases
+1190,1170,Asthma,Respiratory diseases
+1200,1170,Other respiratory diseases,Respiratory diseases
+1220,1210,Peptic ulcer disease,Digestive diseases
+1230,1210,Cirrhosis of the liver,Digestive diseases
+1240,1210,Appendicitis,Digestive diseases
+1241,1210,Gastritis and duodenitis,Digestive diseases
+1242,1210,Paralytic ileus and intestinal obstruction,Digestive diseases
+1244,1210,Inflammatory bowel disease,Digestive diseases
+1246,1210,Gallbladder and biliary diseases,Digestive diseases
+1248,1210,Pancreatitis,Digestive diseases
+1250,1210,Other digestive diseases,Digestive diseases
+1270,1260,Kidney diseases,Genitourinary diseases
+1280,1260,Benign prostatic hyperplasia,Genitourinary diseases
+1290,1260,Urolithiasis,Genitourinary diseases
+1300,1260,Other urinary diseases,Genitourinary diseases
+1310,1260,Infertility,Genitourinary diseases
+1320,1260,Gynecological diseases,Genitourinary diseases
+1330,1330,Skin diseases,Skin diseases
+1350,1340,Rheumatoid arthritis,Musculoskeletal diseases
+1360,1340,Osteoarthritis,Musculoskeletal diseases
+1370,1340,Gout,Musculoskeletal diseases
+1380,1340,Back and neck pain,Musculoskeletal diseases
+1390,1340,Other musculoskeletal disorders,Musculoskeletal diseases
+1410,1400,Neural tube defects,Congenital anomalies
+1420,1400,Cleft lip and cleft palate,Congenital anomalies
+1430,1400,Down syndrome,Congenital anomalies
+1440,1400,Congenital heart anomalies,Congenital anomalies
+1450,1400,Other chromosomal anomalies,Congenital anomalies
+1460,1400,Other congenital anomalies,Congenital anomalies
+1480,1470,Dental caries,Oral conditions
+1490,1470,Periodontal disease,Oral conditions
+1500,1470,Edentulism,Oral conditions
+1502,1470,Other oral disorders,Oral conditions
+1505,1505,Sudden infant death syndrome,Sudden infant death syndrome
+1530,1520,Road injury,Unintentional injuries
+1540,1520,Poisonings,Unintentional injuries
+1550,1520,Falls,Unintentional injuries
+1560,1520,"Fire, heat and hot substances",Unintentional injuries
+1570,1520,Drowning,Unintentional injuries
+1575,1520,Exposure to mechanical forces,Unintentional injuries
+1580,1520,Natural disasters,Unintentional injuries
+1590,1520,Other unintentional injuries,Unintentional injuries
+1610,1600,Self-harm,Intentional injuries
+1620,1600,Interpersonal violence,Intentional injuries
+1630,1600,Collective violence and legal intervention,Intentional injuries
+1700,1700,Other COVID-19 pandemic-related outcomes,Other COVID-19 pandemic-related outcomes
