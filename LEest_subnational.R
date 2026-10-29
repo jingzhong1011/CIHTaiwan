@@ -42,7 +42,7 @@ DeathCount_input <- bind_rows(
     .by = c(YEAR, SEX, MOI, AGP)
   )
 
-colnames(DeathCount_input) <- c("year", "sex", "area", "age", "pop", "dths")
+colnames(DeathCount_input) <- c("year", "sex", "area", "age", "pop", "dths", "dths_raw")
 
 rm(DeathCount, PPmean_female, PPmean_male)
 
@@ -54,6 +54,43 @@ calc_e0 <- function(DeathCount_input, year_idx, sex_idx, area_idx){
   lt <- leCompute_dt_70q0(DeathCount_input, year_idx, sex_idx, area_idx)
   e0 <- lt[agp == "0-4", ex]
   return(e0)
+}
+
+#############################
+## Monte Carlo Uncertainty ##
+#############################
+
+n_sim <- 1000
+seed_mc <- 1011
+n_cores <- getOption("mc.cores", max(1, detectCores() - 2, na.rm = TRUE))
+
+calc_e0_mc <- function(DeathCount_input, year_idx, sex_idx, area_idx, cell_seed){
+  lt_input <- leTable_dt(DeathCount_input, year_idx, sex_idx, area_idx)
+  set.seed(cell_seed)
+  sapply(seq_len(n_sim), function(s){
+    sim_dt <- copy(lt_input)
+    sim_dt[, dths := rpois(.N, dths)]
+    leCalc_dt_70q0(sim_dt)[agp == "0-4", ex]
+  })
+}
+
+e0_mcDraws <- function(DeathCount_input, combo, iso3_val, seed_base){
+  DeathCount_input <- as.data.table(DeathCount_input)
+  draws <- pbmclapply(seq_len(nrow(combo)), function(i){
+    data.table(
+      year = combo$year[i], sex = combo$sex[i], area = as.character(combo$area[i]),
+      sim = seq_len(n_sim),
+      e0 = calc_e0_mc(DeathCount_input, combo$year[i], combo$sex[i], combo$area[i], seed_base + i)
+    )
+  }, mc.cores = n_cores)
+  rbindlist(draws)[, iso3 := iso3_val]
+}
+
+# Attach 95% UI (2.5th and 97.5th percentiles of the draws) to point estimates
+addUI <- function(e0_dt, draws){
+  ui <- draws[, .(e0_lower = quantile(e0, 0.025), e0_upper = quantile(e0, 0.975)),
+              by = .(year, sex, area)]
+  merge(e0_dt[, area := as.character(area)], ui, by = c("year", "sex", "area"), all.x = TRUE)
 }
 
 # --- 1. Taiwan Township ---
@@ -78,7 +115,7 @@ DeathCount_county <- DeathCount_input %>%
   mutate(area = str_sub(area, 1, 5)) %>%
   summarise(
     pop = sum(pop),
-    dths = sum(dths),
+    dths = sum(dths_raw),
     .by = c(year, sex, area, age)
   )
 
@@ -95,11 +132,11 @@ e0_byCounty2000_2019 <- combo_county[, e0 := calc_e0(
   area
 ), by = .(year, sex, area)]
 
-e0_byCounty2000_2019 <- e0_byCounty2000_2019 %>% mutate(iso3 = "TWN")
+mcDraws_TWN <- e0_mcDraws(DeathCount_county, combo_county, "TWN", seed_mc)
+e0_byCounty2000_2019 <- addUI(e0_byCounty2000_2019, mcDraws_TWN) %>% mutate(iso3 = "TWN")
 write.csv(e0_byCounty2000_2019, file = paste0(path_cih, "/e0_taiwanCounty.csv"), row.names = FALSE)
 
-rm(combo, combo_county, DeathCount_county, DeathCount_input)
-
+rm(combo_county, DeathCount_county, DeathCount_input)
 
 # --- 3. Japan Prefecture (2019) ---
 DeathCount_japan2019 <- fread("data/JPNdata/DeathCount_japan2019.csv")
@@ -116,7 +153,8 @@ e0_japanPrefecture2019 <- combo_JPN[, e0 := calc_e0(
   sex,
   area
 ), by = .(year, sex, area)]
-e0_japanPrefecture2019 <- e0_japanPrefecture2019 %>% mutate(iso3 = "JPN")
+mcDraws_JPN <- e0_mcDraws(DeathCount_japan2019, combo_JPN, "JPN", seed_mc + 1e4)
+e0_japanPrefecture2019 <- addUI(e0_japanPrefecture2019, mcDraws_JPN) %>% mutate(iso3 = "JPN")
 
 write.csv(e0_japanPrefecture2019, paste0(path_cih, "/e0_japanPrefecture2019.csv"), row.names = FALSE)
 rm(combo_JPN, DeathCount_japan2019)
@@ -194,10 +232,32 @@ e0_koreaProvince2019 <- combo_KOR[, e0 := calc_e0(
   area
 ), by = .(year, sex, area)]
 
-e0_koreaProvince2019 <- e0_koreaProvince2019 %>% mutate(iso3 = "KOR")
+mcDraws_KOR <- e0_mcDraws(DeathCount_korea2019, combo_KOR, "KOR", seed_mc + 2e4)
+e0_koreaProvince2019 <- addUI(e0_koreaProvince2019, mcDraws_KOR) %>% mutate(iso3 = "KOR")
 write.csv(e0_koreaProvince2019, paste0(path_cih, "/e0_koreaProvince2019.csv"), row.names = FALSE)
 rm(combo_KOR, DeathCount_korea2019)
 
+# --- 5. Distribution summaries with UI (2019) ---
+mcDraws_all <- rbindlist(list(mcDraws_TWN, mcDraws_JPN, mcDraws_KOR))[year == 2019]
+write.csv(mcDraws_all, paste0(path_cih, "/e0_subnational_mcDraws.csv"), row.names = FALSE)
+
+distStats <- function(dt){
+  dt[, .(min = min(e0), max = max(e0), range = max(e0) - min(e0), IQR = IQR(e0)),
+     by = setdiff(names(dt), c("area", "e0"))]
+}
+
+e0_subnational2019 <- rbindlist(list(
+  e0_byCounty2000_2019[year == 2019], e0_japanPrefecture2019, e0_koreaProvince2019
+), use.names = TRUE)
+
+stats_point <- distStats(e0_subnational2019[, .(iso3, sex, area, e0)]) %>%
+  melt(id.vars = c("iso3", "sex"), variable.name = "stat", value.name = "value")
+stats_ui <- distStats(mcDraws_all[, .(iso3, sex, sim, area, e0)]) %>%
+  melt(id.vars = c("iso3", "sex", "sim"), variable.name = "stat") %>%
+  .[, .(lower = quantile(value, 0.025), upper = quantile(value, 0.975)), by = .(iso3, sex, stat)]
+
+e0_subnationalSummary <- merge(stats_point, stats_ui, by = c("iso3", "sex", "stat"))
+write.csv(e0_subnationalSummary, paste0(path_cih, "/e0_subnational_summary.csv"), row.names = FALSE)
 
 
 
